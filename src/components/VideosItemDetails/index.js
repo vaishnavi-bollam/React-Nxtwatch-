@@ -5,6 +5,7 @@ import Loader from 'react-loader-spinner'
 import {formatDistanceToNow} from 'date-fns'
 import LeftContainer from '../LeftContainer/index'
 import Header from '../Header/index'
+import SavedVideos from '../SavedVideos/index'
 import './index.css'
 
 const apiStatusConstants = {
@@ -18,6 +19,7 @@ class VideosItemDetails extends Component {
   state = {
     eachVideosList: [],
     apiStatus: apiStatusConstants.initial,
+    isSaveClicked: false,
   }
 
   componentDidMount() {
@@ -79,8 +81,14 @@ class VideosItemDetails extends Component {
     return videoId
   }
 
+  toggleSave = () => {
+    this.setState(prevState => ({
+      isSaveClicked: !prevState.isSaveClicked,
+    }))
+  }
+
   renderVideosListView = () => {
-    const {eachVideosList} = this.state
+    const {eachVideosList, isSaveClicked} = this.state
     const {
       publishedAt,
       description,
@@ -98,7 +106,6 @@ class VideosItemDetails extends Component {
       height: '315',
       width: '700',
       playerVars: {
-        // https://developers.google.com/youtube/player_parameters
         autoplay: 1,
       },
     }
@@ -109,7 +116,6 @@ class VideosItemDetails extends Component {
     const day = parseInt(dateParts[1].replace(',', ''))
     const year = parseInt(dateParts[2])
 
-    // Convert month name to number
     const monthMap = {
       Jan: 0,
       Feb: 1,
@@ -140,7 +146,8 @@ class VideosItemDetails extends Component {
         <p>{formatDistanceToNow(date)} ago</p>
         <p>Like</p>
         <p>Dislike</p>
-        <p>Save</p>
+        <p onClick={this.toggleSave}>{isSaveClicked ? 'Unsave' : 'Save'}</p>
+        {isSaveClicked && <SavedVideos eachVideosList={eachVideosList} />}
         <hr />
         <img src={profileImageUrl} />
         <p>{name}</p>
