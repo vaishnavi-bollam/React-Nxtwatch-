@@ -1,0 +1,4 @@
+.trending-videos-container {
+  display: flex;
+  flex-direction: column;
+}

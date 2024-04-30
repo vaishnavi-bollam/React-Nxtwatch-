@@ -1,12 +1,10 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
-// import {CiSearch} from 'react-icons'
 
 import Header from '../Header/index'
-import VideoCard from '../VideoCard/index'
+import GamingCard from '../GamingCard/index'
 import LeftContainer from '../LeftContainer/index'
-import './index.css'
 
 const apiStatusConstants = {
   initial: 'INITIAL',
@@ -15,23 +13,23 @@ const apiStatusConstants = {
   inProgress: 'IN_PROGRESS',
 }
 
-class Home extends Component {
+class Gaming extends Component {
   state = {
-    productsData: [],
+    trendingGamingData: [],
     apiStatus: apiStatusConstants.initial,
   }
 
   componentDidMount() {
-    this.getVideos()
+    this.getTrendingVideos()
   }
 
-  getVideos = async () => {
-    const {productsData, apiStatus} = this.state
+  getTrendingVideos = async () => {
+    const {trendingGamingData, apiStatus} = this.state
     this.setState({
       apiStatus: apiStatusConstants.inProgress,
     })
     const jwtToken = Cookies.get('jwt_token')
-    const url = 'https://apis.ccbp.in/videos/all?search='
+    const url = 'https://apis.ccbp.in/videos/gaming'
     const options = {
       headers: {
         authorization: `Bearer ${jwtToken}`,
@@ -43,35 +41,35 @@ class Home extends Component {
       const fetchedData = await response.json()
       console.log(fetchedData)
       const updatedData = fetchedData.videos.map(eachVideo => ({
-        channelName: eachVideo.channel.name,
-        profileImageUrl: eachVideo.channel.profile_image_url,
         id: eachVideo.id,
-        publishedAt: eachVideo.published_at,
         thumbnailUrl: eachVideo.thumbnail_url,
         title: eachVideo.title,
         viewCount: eachVideo.view_count,
       }))
       this.setState({
-        productsData: updatedData,
+        trendingGamingData: updatedData,
         apiStatus: apiStatusConstants.success,
       })
     } else {
       this.setState({
         apiStatus: apiStatusConstants.failure,
       })
+      console.log('failed')
     }
   }
 
   renderVideosListView = () => {
-    const {productsData} = this.state
+    const {trendingGamingData} = this.state
     return (
       <div className="videos-main-container">
         <div>
           <LeftContainer />
         </div>
-        <ul className="videos-container">
-          {productsData.map(each => (
-            <VideoCard each={each} key={each.id} />
+
+        <ul className="trending-videos-container">
+          <h1>Gaming</h1>
+          {trendingGamingData.map(each => (
+            <GamingCard each={each} key={each.id} />
           ))}
         </ul>
       </div>
@@ -93,7 +91,7 @@ class Home extends Component {
     </div>
   )
 
-  renderAllVideos = () => {
+  renderAllGamingVideos = () => {
     const {apiStatus} = this.state
 
     switch (apiStatus) {
@@ -112,16 +110,11 @@ class Home extends Component {
     return (
       <div>
         <Header />
-        <h1>Home page</h1>
-        <div className="top-banner">
-          <img src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png" />
-          <p>Buy Nxtwatch premium prepaid UPIs with UPI</p>
-          <button>GEI IT NOW</button>
-        </div>
-        <div>{this.renderAllVideos()}</div>
+        <h1>Trending page</h1>
+        <div>{this.renderAllGamingVideos()}</div>
       </div>
     )
   }
 }
 
-export default Home
+export default Gaming

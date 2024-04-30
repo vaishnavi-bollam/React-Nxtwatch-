@@ -1,12 +1,10 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
-// import {CiSearch} from 'react-icons'
 
 import Header from '../Header/index'
-import VideoCard from '../VideoCard/index'
+import TrendingCard from '../TrendingCard/index'
 import LeftContainer from '../LeftContainer/index'
-import './index.css'
 
 const apiStatusConstants = {
   initial: 'INITIAL',
@@ -15,23 +13,23 @@ const apiStatusConstants = {
   inProgress: 'IN_PROGRESS',
 }
 
-class Home extends Component {
+class Trending extends Component {
   state = {
-    productsData: [],
+    trendingProductsData: [],
     apiStatus: apiStatusConstants.initial,
   }
 
   componentDidMount() {
-    this.getVideos()
+    this.getTrendingVideos()
   }
 
-  getVideos = async () => {
-    const {productsData, apiStatus} = this.state
+  getTrendingVideos = async () => {
+    const {trendingProductsData, apiStatus} = this.state
     this.setState({
       apiStatus: apiStatusConstants.inProgress,
     })
     const jwtToken = Cookies.get('jwt_token')
-    const url = 'https://apis.ccbp.in/videos/all?search='
+    const url = 'https://apis.ccbp.in/videos/trending'
     const options = {
       headers: {
         authorization: `Bearer ${jwtToken}`,
@@ -52,26 +50,29 @@ class Home extends Component {
         viewCount: eachVideo.view_count,
       }))
       this.setState({
-        productsData: updatedData,
+        trendingProductsData: updatedData,
         apiStatus: apiStatusConstants.success,
       })
     } else {
       this.setState({
         apiStatus: apiStatusConstants.failure,
       })
+      console.log('failed')
     }
   }
 
   renderVideosListView = () => {
-    const {productsData} = this.state
+    const {trendingProductsData} = this.state
     return (
       <div className="videos-main-container">
         <div>
           <LeftContainer />
         </div>
-        <ul className="videos-container">
-          {productsData.map(each => (
-            <VideoCard each={each} key={each.id} />
+
+        <ul className="trending-videos-container">
+          <h1>Trending</h1>
+          {trendingProductsData.map(each => (
+            <TrendingCard each={each} key={each.id} />
           ))}
         </ul>
       </div>
@@ -93,7 +94,7 @@ class Home extends Component {
     </div>
   )
 
-  renderAllVideos = () => {
+  renderAllTrendingVideos = () => {
     const {apiStatus} = this.state
 
     switch (apiStatus) {
@@ -112,16 +113,11 @@ class Home extends Component {
     return (
       <div>
         <Header />
-        <h1>Home page</h1>
-        <div className="top-banner">
-          <img src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png" />
-          <p>Buy Nxtwatch premium prepaid UPIs with UPI</p>
-          <button>GEI IT NOW</button>
-        </div>
-        <div>{this.renderAllVideos()}</div>
+        <h1>Trending page</h1>
+        <div>{this.renderAllTrendingVideos()}</div>
       </div>
     )
   }
 }
 
-export default Home
+export default Trending

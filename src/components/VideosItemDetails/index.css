@@ -1,0 +1,11 @@
+.each-video-container {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+}
+
+.iframe-styling {
+  width: 560px;
+  height: 315px;
+  frameborder: 0px;
+}

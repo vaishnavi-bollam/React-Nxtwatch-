@@ -1,0 +1,14 @@
+.trending-images {
+  height: 300px;
+  width: 400px;
+}
+
+.trending-profile-image {
+  height: 50px;
+  width: 60px;
+}
+
+.trending-card {
+  display: flex;
+  margin: 10px;
+}

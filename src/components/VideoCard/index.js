@@ -1,3 +1,6 @@
+import {Link} from 'react-router-dom'
+import './index.css'
+
 const VideoCard = props => {
   const {each} = props
   const {
@@ -10,15 +13,18 @@ const VideoCard = props => {
     viewCount,
   } = each
   return (
-    <div>
-      <img src={thumbnailUrl} />
-      <img src={profileImageUrl} />
-      <p>{title}</p>
-      <p>iB Cricket</p>
-      <p>{viewCount}</p>
+    <li className="video-card">
+      <Link to={`/videos/${id}`}>
+        <img src={thumbnailUrl} className="thumbnail-url" />
+        <br />
+        <img src={profileImageUrl} className="profile-image" />
+        <p>{title}</p>
+        <p>iB Cricket</p>
+        <p>{viewCount}</p>
 
-      <p>{publishedAt}</p>
-    </div>
+        <p>{publishedAt}</p>
+      </Link>
+    </li>
   )
 }
 

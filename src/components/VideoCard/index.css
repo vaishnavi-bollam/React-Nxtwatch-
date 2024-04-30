@@ -1,0 +1,17 @@
+.profile-image {
+  height: 70px;
+  width: 70px;
+}
+
+.video-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  width: 300px;
+  margin: 30px;
+}
+
+.thumbnail-url {
+  height: 300px;
+  width: 300px;
+}
