@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import YouTube from 'react-youtube'
+// import YouTube from 'react-youtube'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 import {formatDistanceToNow} from 'date-fns'
@@ -139,15 +139,16 @@ class VideosItemDetails extends Component {
     return (
       <div>
         <h1>video</h1>
-        <YouTube videoId={this.getYouTubeVideoId(videoUrl)} opts={opts} />
+        {/* <YouTube videoId={this.getYouTubeVideoId(videoUrl)} opts={opts} /> */}
+        <img src={videoUrl} />
         <br />
         <p>{title}</p>
         <p>{viewCount} views</p>
         <p>{formatDistanceToNow(date)} ago</p>
         <p>Like</p>
         <p>Dislike</p>
-        <p onClick={this.toggleSave}>{isSaveClicked ? 'Unsave' : 'Save'}</p>
-        {isSaveClicked && <SavedVideos eachVideosList={eachVideosList} />}
+        {/* <p onClick={this.toggleSave}>{isSaveClicked ? 'Unsave' : 'Save'}</p> */}
+        {/* {isSaveClicked && <SavedVideos eachVideosList={eachVideosList} />} */}
         <hr />
         <img src={profileImageUrl} />
         <p>{name}</p>
