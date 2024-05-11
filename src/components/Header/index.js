@@ -1,5 +1,6 @@
 import {withRouter, Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
+import {FaMoon} from 'react-icons/fa'
 
 import './index.css'
 
@@ -9,6 +10,11 @@ const Header = props => {
     Cookies.remove('jwt_token')
     history.replace('/login')
   }
+
+  const darkImageClicked = () => {
+    console.log('dark-image clicked')
+  }
+
   return (
     <nav className="nav-bar">
       <li>
@@ -26,11 +32,8 @@ const Header = props => {
             <p className="text">Home</p>
           </Link>
         </li> */}
-        <li>
-          <img
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
-            className="header-logos"
-          />
+        <li onClick={darkImageClicked}>
+          <FaMoon />
         </li>
 
         {/* <li>

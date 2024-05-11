@@ -110,7 +110,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
+      <div className="main-home-container">
         <Header />
         <h1>Home page</h1>
         <div className="top-banner">

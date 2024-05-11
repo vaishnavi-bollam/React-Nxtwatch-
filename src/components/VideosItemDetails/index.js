@@ -6,6 +6,7 @@ import {formatDistanceToNow} from 'date-fns'
 import LeftContainer from '../LeftContainer/index'
 import Header from '../Header/index'
 import SavedVideos from '../SavedVideos/index'
+
 import './index.css'
 
 const apiStatusConstants = {
@@ -141,16 +142,18 @@ class VideosItemDetails extends Component {
         <h1>video</h1>
         {/* <YouTube videoId={this.getYouTubeVideoId(videoUrl)} opts={opts} /> */}
         <img src={videoUrl} />
+        <img src={thumbnailUrl} alt="video thumbnail" />
         <br />
         <p>{title}</p>
         <p>{viewCount} views</p>
         <p>{formatDistanceToNow(date)} ago</p>
-        <p>Like</p>
-        <p>Dislike</p>
+        <button className="like-btn">Like</button>
+        <button className="dislike-btn">Dislike</button>
+        <button>Save</button>
         {/* <p onClick={this.toggleSave}>{isSaveClicked ? 'Unsave' : 'Save'}</p> */}
         {/* {isSaveClicked && <SavedVideos eachVideosList={eachVideosList} />} */}
         <hr />
-        <img src={profileImageUrl} />
+        <img src={profileImageUrl} alt="channel logo" />
         <p>{name}</p>
         <p>{subscriberCount}</p>
         <p>{description}</p>
@@ -170,7 +173,11 @@ class VideosItemDetails extends Component {
         src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
         alt="failure view"
       />
-      <p>We cannot seem to find the page you are looking for</p>
+      <p>Oops! Something Went Wrong</p>
+      <p>
+        We are having some trouble to complete your request. Please try again.
+      </p>
+
       <button>Retry</button>
     </div>
   )

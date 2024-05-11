@@ -16,11 +16,16 @@ const TrendingCard = props => {
   return (
     <li className="trending-card">
       <Link to={`/videos/${id}`}>
-        <img src={thumbnailUrl} className="trending-images" />
+        <img
+          src={thumbnailUrl}
+          className="trending-images"
+          alt="video thumbnail"
+        />
         <div>
           <p>{channelName}</p>
           <p>{title}</p>
           <p>{viewCount} Views</p>
+          <p>{publishedAt}</p>
           <img src={profileImageUrl} className="trending-profile-image" />
         </div>
       </Link>

@@ -113,7 +113,7 @@ class Trending extends Component {
     return (
       <div>
         <Header />
-        <h1>Trending page</h1>
+        <h1>Trending</h1>
         <div>{this.renderAllTrendingVideos()}</div>
       </div>
     )

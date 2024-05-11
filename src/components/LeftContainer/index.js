@@ -22,7 +22,9 @@ const LeftContainer = () => (
         </Link>
       </li>
       <li>
-        <p>Saved Videos</p>
+        <Link to="/saved-videos">
+          <p>Saved videos</p>
+        </Link>
       </li>
     </ul>
     <div>
@@ -30,16 +32,19 @@ const LeftContainer = () => (
       <img
         src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
         className="logos"
+        alt="facebook logo"
       />
       <img
         src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
         className="logos"
+        alt="twitter logo"
       />
       <img
         src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
         className="logos"
+        alt="linked in logo"
       />
-      <p>Enjoy now to see your channels and recommendations</p>
+      <p>Enjoy! Now to see your channels and recommendations!</p>
     </div>
   </div>
 )
