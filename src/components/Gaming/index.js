@@ -5,6 +5,7 @@ import Loader from 'react-loader-spinner'
 import Header from '../Header/index'
 import GamingCard from '../GamingCard/index'
 import LeftContainer from '../LeftContainer/index'
+import {MyContext} from '../MyContext'
 
 const apiStatusConstants = {
   initial: 'INITIAL',
@@ -61,18 +62,27 @@ class Gaming extends Component {
   renderVideosListView = () => {
     const {trendingGamingData} = this.state
     return (
-      <div className="videos-main-container">
-        <div>
-          <LeftContainer />
-        </div>
+      <MyContext.Consumer>
+        {({isLightMode}) => (
+          <div
+            data-testid="gaming"
+            className={`videos-main-container ${
+              isLightMode ? 'black-styling' : 'white-styling'
+            }`}
+          >
+            <div>
+              <LeftContainer />
+            </div>
 
-        <ul className="trending-videos-container">
-          <h1>Gaming</h1>
-          {trendingGamingData.map(each => (
-            <GamingCard each={each} key={each.id} />
-          ))}
-        </ul>
-      </div>
+            <ul className="trending-videos-container">
+              <h1>Gaming</h1>
+              {trendingGamingData.map(each => (
+                <GamingCard each={each} key={each.id} />
+              ))}
+            </ul>
+          </div>
+        )}
+      </MyContext.Consumer>
     )
   }
 
@@ -84,10 +94,12 @@ class Gaming extends Component {
 
   renderFailureView = () => (
     <div>
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+        alt="failure view"
+      />
       <h1>Oops! Something Went Wrong</h1>
-      <p>
-        We are having some trouble processing your request. Please try again.
-      </p>
+      <button type="button">Retry</button>
     </div>
   )
 

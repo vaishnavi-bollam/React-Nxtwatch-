@@ -1,58 +1,78 @@
+import {Component} from 'react'
 import {withRouter, Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import {FaMoon} from 'react-icons/fa'
-
+import {MyContext} from '../MyContext'
 import './index.css'
 
-const Header = props => {
-  const logoutClicked = () => {
-    const {history} = props
+class Header extends Component {
+  logoutClicked = () => {
+    const {history} = this.props
     Cookies.remove('jwt_token')
     history.replace('/login')
   }
 
-  const darkImageClicked = () => {
-    console.log('dark-image clicked')
+  darkImageClicked = (toggleLightMode, isLightMode) => {
+    toggleLightMode()
+    console.log('isLightMode clicked:', isLightMode)
   }
 
-  return (
-    <nav className="nav-bar">
-      <li>
-        <Link to="/">
-          <img
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-            alt="website logo"
-          />
-        </Link>
-      </li>
+  render() {
+    return (
+      <MyContext.Consumer>
+        {({isLightMode, toggleLightMode}) => (
+          <nav
+            className={`nav-bar ${
+              isLightMode ? 'black-styling' : 'white-styling'
+            }`}
+          >
+            <li>
+              <Link to="/">
+                {isLightMode ? (
+                  <img
+                    src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png"
+                    alt="website logo"
+                  />
+                ) : (
+                  <img
+                    src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+                    alt="website logo"
+                  />
+                )}
+              </Link>
+            </li>
 
-      <div className="nav-text">
-        {/* <li>
-          <Link to="/">
-            <p className="text">Home</p>
-          </Link>
-        </li> */}
-        <li onClick={darkImageClicked}>
-          <FaMoon />
-        </li>
+            <div className="nav-text">
+              <li
+                onClick={() =>
+                  this.darkImageClicked(toggleLightMode, isLightMode)
+                }
+              >
+                <button
+                  type="button"
+                  data-testid="theme"
+                  aria-label="Toggle theme"
+                >
+                  <FaMoon />
+                </button>
+              </li>
 
-        {/* <li>
-          <Link to="/jobs">
-            <p>Jobs</p>
-          </Link>
-        </li> */}
-        <li>
-          <img
-            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-profile-img.png "
-            className="header-logos"
-          />
-        </li>
-      </div>
-      <button onClick={logoutClicked} type="button">
-        Logout
-      </button>
-    </nav>
-  )
+              <li>
+                <img
+                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-profile-img.png"
+                  className="header-logos"
+                  alt="profile"
+                />
+              </li>
+            </div>
+            <button onClick={this.logoutClicked} type="button">
+              Logout
+            </button>
+          </nav>
+        )}
+      </MyContext.Consumer>
+    )
+  }
 }
 
 export default withRouter(Header)

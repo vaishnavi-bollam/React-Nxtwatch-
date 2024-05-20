@@ -2,8 +2,11 @@ import {Link} from 'react-router-dom'
 
 const LeftContainer = () => (
   <div>
-    <input type="text" />
+    <input type="search" />
     {/* <CiSearch /> */}
+    <button data-testid="searchButton" type="button">
+      Search
+    </button>
 
     <ul>
       <li>

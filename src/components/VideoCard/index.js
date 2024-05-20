@@ -4,7 +4,7 @@ import './index.css'
 const VideoCard = props => {
   const {each} = props
   const {
-    channelName,
+    name,
     profileImageUrl,
     id,
     publishedAt,
@@ -15,10 +15,19 @@ const VideoCard = props => {
   return (
     <li className="video-card">
       <Link to={`/videos/${id}`}>
-        <img src={thumbnailUrl} className="thumbnail-url" />
+        <img
+          src={thumbnailUrl}
+          className="thumbnail-url"
+          alt="video thumbnail"
+        />
         <br />
-        <img src={profileImageUrl} className="profile-image" />
+        <img
+          src={profileImageUrl}
+          className="profile-image"
+          alt="channel logo"
+        />
         <p>{title}</p>
+        <p>{name}</p>
         <p>iB Cricket</p>
         <p>{viewCount}</p>
 

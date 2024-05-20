@@ -147,6 +147,7 @@ class VideosItemDetails extends Component {
         <p>{title}</p>
         <p>{viewCount} views</p>
         <p>{formatDistanceToNow(date)} ago</p>
+        <p>{publishedAt}</p>
         <button className="like-btn">Like</button>
         <button className="dislike-btn">Dislike</button>
         <button>Save</button>
@@ -170,13 +171,10 @@ class VideosItemDetails extends Component {
   renderFailureView = () => (
     <div>
       <img
-        src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
+        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
         alt="failure view"
       />
-      <p>Oops! Something Went Wrong</p>
-      <p>
-        We are having some trouble to complete your request. Please try again.
-      </p>
+      <h1>Oops! Something Went Wrong</h1>
 
       <button>Retry</button>
     </div>

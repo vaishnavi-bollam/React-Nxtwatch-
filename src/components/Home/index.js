@@ -6,6 +6,8 @@ import Loader from 'react-loader-spinner'
 import Header from '../Header/index'
 import VideoCard from '../VideoCard/index'
 import LeftContainer from '../LeftContainer/index'
+import {MyContext} from '../MyContext'
+
 import './index.css'
 
 const apiStatusConstants = {
@@ -65,16 +67,24 @@ class Home extends Component {
   renderVideosListView = () => {
     const {productsData} = this.state
     return (
-      <div className="videos-main-container">
-        <div>
-          <LeftContainer />
-        </div>
-        <ul className="videos-container">
-          {productsData.map(each => (
-            <VideoCard each={each} key={each.id} />
-          ))}
-        </ul>
-      </div>
+      <MyContext.Consumer>
+        {({isLightMode}) => (
+          <div
+            className={`videos-main-container ${
+              isLightMode ? 'black-styling' : 'white-styling'
+            }`}
+          >
+            <div>
+              <LeftContainer />
+            </div>
+            <ul className="videos-container">
+              {productsData.map(each => (
+                <VideoCard each={each} key={each.id} />
+              ))}
+            </ul>
+          </div>
+        )}
+      </MyContext.Consumer>
     )
   }
 
@@ -86,10 +96,12 @@ class Home extends Component {
 
   renderFailureView = () => (
     <div>
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+        alt="failure view"
+      />
       <h1>Oops! Something Went Wrong</h1>
-      <p>
-        We are having some trouble processing your request. Please try again.
-      </p>
+      <button type="button">Retry</button>
     </div>
   )
 
@@ -114,9 +126,13 @@ class Home extends Component {
         <Header />
         <h1>Home page</h1>
         <div className="top-banner">
-          <img src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png" />
-          <p>Buy Nxtwatch premium prepaid UPIs with UPI</p>
-          <button>GEI IT NOW</button>
+          <img
+            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+            alt="nxt watch logo"
+          />
+          <p>Buy Nxt Watch Premium UPIs with UPI</p>
+
+          <button type="button">GET IT NOW</button>
         </div>
         <div>{this.renderAllVideos()}</div>
       </div>
