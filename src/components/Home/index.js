@@ -2,6 +2,7 @@ import {Component} from 'react'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 // import {CiSearch} from 'react-icons'
+import {BsX} from 'react-icons/bs'
 
 import Header from '../Header/index'
 import VideoCard from '../VideoCard/index'
@@ -21,6 +22,7 @@ class Home extends Component {
   state = {
     productsData: [],
     apiStatus: apiStatusConstants.initial,
+    isBannerVisible: true,
   }
 
   componentDidMount() {
@@ -62,6 +64,10 @@ class Home extends Component {
         apiStatus: apiStatusConstants.failure,
       })
     }
+  }
+
+  closeBanner = () => {
+    this.setState({isBannerVisible: false})
   }
 
   renderVideosListView = () => {
@@ -121,11 +127,12 @@ class Home extends Component {
   }
 
   render() {
+    const {isBannerVisible} = this.state
     return (
       <div className="main-home-container">
         <Header />
         <h1>Home page</h1>
-        <div className="top-banner">
+        {/* <div className="top-banner">
           <img
             src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
             alt="nxt watch logo"
@@ -133,7 +140,26 @@ class Home extends Component {
           <p>Buy Nxt Watch Premium UPIs with UPI</p>
 
           <button type="button">GET IT NOW</button>
-        </div>
+        </div> */}
+        {isBannerVisible && (
+          <div className="top-banner">
+            <img
+              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+              alt="nxt watch logo"
+            />
+            <p>Buy Nxt Watch Premium UPIs with UPI</p>
+            <button type="button">GET IT NOW</button>
+            <button
+              type="button"
+              className="close-button"
+              onClick={this.closeBanner}
+              aria-label="Close"
+            >
+              <BsX />
+            </button>
+          </div>
+        )}
+
         <div>{this.renderAllVideos()}</div>
       </div>
     )
