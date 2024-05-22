@@ -6,6 +6,7 @@ import Header from '../Header/index'
 import TrendingCard from '../TrendingCard/index'
 import LeftContainer from '../LeftContainer/index'
 import {MyContext} from '../MyContext'
+import {DarkMainContainer} from '../StyledComponent'
 
 const apiStatusConstants = {
   initial: 'INITIAL',
@@ -25,7 +26,6 @@ class Trending extends Component {
   }
 
   getTrendingVideos = async () => {
-    const {trendingProductsData, apiStatus} = this.state
     this.setState({
       apiStatus: apiStatusConstants.inProgress,
     })
@@ -67,22 +67,22 @@ class Trending extends Component {
     return (
       <MyContext.Consumer>
         {({isLightMode}) => (
-          <div
-            className={`videos-main-container ${
-              isLightMode ? 'black-styling' : 'white-styling'
-            }`}
+          <DarkMainContainer
+            data-testid="trending"
+            className="videos-main-container"
+            isLightMode={isLightMode}
           >
             <div>
               <LeftContainer />
             </div>
-
+            {/* <h1>Trending</h1> */}
             <ul className="trending-videos-container">
               <h1>Trending</h1>
               {trendingProductsData.map(each => (
                 <TrendingCard each={each} key={each.id} />
               ))}
             </ul>
-          </div>
+          </DarkMainContainer>
         )}
       </MyContext.Consumer>
     )
@@ -94,6 +94,8 @@ class Trending extends Component {
     </div>
   )
 
+  retryClicked = () => this.getTrendingVideos()
+
   renderFailureView = () => (
     <div>
       <img
@@ -101,8 +103,10 @@ class Trending extends Component {
         alt="failure view"
       />
       <h1>Oops! Something Went Wrong</h1>
-
-      <button type="button">Retry</button>
+      <p>We are having some trouble</p>
+      <button type="button" onClick={this.retryClicked}>
+        Retry
+      </button>
     </div>
   )
 
@@ -125,7 +129,7 @@ class Trending extends Component {
     return (
       <div>
         <Header />
-        <h1>Trending</h1>
+
         <div>{this.renderAllTrendingVideos()}</div>
       </div>
     )

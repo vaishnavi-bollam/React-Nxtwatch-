@@ -2,11 +2,24 @@ import {Component} from 'react'
 import {withRouter, Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import {FaMoon} from 'react-icons/fa'
+import Popup from 'reactjs-popup'
+
 import {MyContext} from '../MyContext'
+import {NavEle} from '../StyledComponent'
 import './index.css'
 
 class Header extends Component {
+  state = {isCancel: true}
+
   logoutClicked = () => {
+    this.setState({isCancel: true})
+  }
+
+  cancelClicked = () => {
+    this.setState({isCancel: false})
+  }
+
+  confirmClicked = () => {
     const {history} = this.props
     Cookies.remove('jwt_token')
     history.replace('/login')
@@ -18,13 +31,22 @@ class Header extends Component {
   }
 
   render() {
+    const {isCancel} = this.state
+    console.log(isCancel)
+
     return (
       <MyContext.Consumer>
         {({isLightMode, toggleLightMode}) => (
-          <nav
-            className={`nav-bar ${
-              isLightMode ? 'black-styling' : 'white-styling'
-            }`}
+          // <nav
+          //     className={`nav-bar ${
+          //       isLightMode ? 'black-styling' : 'white-styling'
+          //     }`}
+          //   >
+
+          <NavEle
+            data-testid="header"
+            className="nav-bar"
+            isLightMode={isLightMode}
           >
             <li>
               <Link to="/">
@@ -65,10 +87,41 @@ class Header extends Component {
                 />
               </li>
             </div>
-            <button onClick={this.logoutClicked} type="button">
-              Logout
-            </button>
-          </nav>
+
+            <div className="popup-container">
+              <Popup
+                trigger={
+                  <button
+                    className="trigger-button"
+                    type="button"
+                    onClick={this.logoutClicked}
+                  >
+                    Logout
+                  </button>
+                }
+                modal
+                closeOnDocumentClick
+              >
+                {close => (
+                  <div className="top-banner">
+                    <p>Are you sure, you want to logout</p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        this.cancelClicked()
+                        close()
+                      }}
+                    >
+                      Cancel
+                    </button>
+                    <button type="button" onClick={this.confirmClicked}>
+                      Confirm
+                    </button>
+                  </div>
+                )}
+              </Popup>
+            </div>
+          </NavEle>
         )}
       </MyContext.Consumer>
     )

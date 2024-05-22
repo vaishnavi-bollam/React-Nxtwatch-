@@ -12,6 +12,7 @@ const VideoCard = props => {
     title,
     viewCount,
   } = each
+  console.log('name', name)
   return (
     <li className="video-card">
       <Link to={`/videos/${id}`}>

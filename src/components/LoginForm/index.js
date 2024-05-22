@@ -41,7 +41,7 @@ class Login extends Component {
 
   onSubmitForm = async event => {
     event.preventDefault()
-    const {username, password, showPassword} = this.state
+    const {username, password} = this.state
     const url = 'https://apis.ccbp.in/login'
     const userDetails = {username, password}
     const options = {
@@ -110,7 +110,7 @@ class Login extends Component {
           />
           <div>{this.renderUsername()}</div>
           <div>{this.renderPassword()}</div>
-          <button type="submit" className="login-buttton">
+          <button type="button" className="login-buttton">
             Login
           </button>
           {showSubmiterror && <p>{errorMsg}</p>}

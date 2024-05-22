@@ -8,6 +8,7 @@ import Header from '../Header/index'
 import VideoCard from '../VideoCard/index'
 import LeftContainer from '../LeftContainer/index'
 import {MyContext} from '../MyContext'
+import {DarkMainContainer} from '../StyledComponent'
 
 import './index.css'
 
@@ -30,7 +31,6 @@ class Home extends Component {
   }
 
   getVideos = async () => {
-    const {productsData, apiStatus} = this.state
     this.setState({
       apiStatus: apiStatusConstants.inProgress,
     })
@@ -45,9 +45,10 @@ class Home extends Component {
     const response = await fetch(url, options)
     if (response.ok) {
       const fetchedData = await response.json()
-      console.log(fetchedData)
+      console.log('home details', fetchedData)
+
       const updatedData = fetchedData.videos.map(eachVideo => ({
-        channelName: eachVideo.channel.name,
+        name: eachVideo.channel.name,
         profileImageUrl: eachVideo.channel.profile_image_url,
         id: eachVideo.id,
         publishedAt: eachVideo.published_at,
@@ -70,15 +71,44 @@ class Home extends Component {
     this.setState({isBannerVisible: false})
   }
 
+  //   renderVideosListView = () => {
+  //     const {productsData} = this.state
+  //     return (
+  //       <MyContext.Consumer>
+  //         {({isLightMode}) => (
+  //           <div
+  //             className={`videos-main-container ${
+  //               isLightMode ? 'black-styling' : 'white-styling'
+  //             }`}
+  //           >
+  //           <DarkMainContainer
+  //             data-testid="home"
+  //             className="videos-main-container"
+  //             isLightMode={isLightMode}
+  //           >
+  //             <div>
+  //               <LeftContainer />
+  //             </div>
+  //             <ul className="videos-container">
+  //               {productsData.map(each => (
+  //                 <VideoCard each={each} key={each.id} />
+  //               ))}
+  //             </ul>
+  //           </DarkMainContainer>
+  //         )}
+  //       </MyContext.Consumer>
+  //     )
+  //   }
+
   renderVideosListView = () => {
     const {productsData} = this.state
     return (
       <MyContext.Consumer>
         {({isLightMode}) => (
-          <div
-            className={`videos-main-container ${
-              isLightMode ? 'black-styling' : 'white-styling'
-            }`}
+          <DarkMainContainer
+            data-testid="home"
+            className="videos-main-container"
+            isLightMode={isLightMode}
           >
             <div>
               <LeftContainer />
@@ -88,7 +118,7 @@ class Home extends Component {
                 <VideoCard each={each} key={each.id} />
               ))}
             </ul>
-          </div>
+          </DarkMainContainer>
         )}
       </MyContext.Consumer>
     )
@@ -100,6 +130,8 @@ class Home extends Component {
     </div>
   )
 
+  retryClicked = () => this.getVideos()
+
   renderFailureView = () => (
     <div>
       <img
@@ -107,7 +139,10 @@ class Home extends Component {
         alt="failure view"
       />
       <h1>Oops! Something Went Wrong</h1>
-      <button type="button">Retry</button>
+      <p>We are having some trouble</p>
+      <button type="button" onClick={this.retryClicked}>
+        Retry
+      </button>
     </div>
   )
 
@@ -132,6 +167,7 @@ class Home extends Component {
       <div className="main-home-container">
         <Header />
         <h1>Home page</h1>
+
         {/* <div className="top-banner">
           <img
             src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
@@ -142,7 +178,7 @@ class Home extends Component {
           <button type="button">GET IT NOW</button>
         </div> */}
         {isBannerVisible && (
-          <div className="top-banner">
+          <div className="top-banner" data-testid="banner">
             <img
               src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
               alt="nxt watch logo"
@@ -150,6 +186,7 @@ class Home extends Component {
             <p>Buy Nxt Watch Premium UPIs with UPI</p>
             <button type="button">GET IT NOW</button>
             <button
+              data-testid="close"
               type="button"
               className="close-button"
               onClick={this.closeBanner}

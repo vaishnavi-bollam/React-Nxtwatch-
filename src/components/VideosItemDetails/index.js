@@ -5,7 +5,7 @@ import Loader from 'react-loader-spinner'
 import {formatDistanceToNow} from 'date-fns'
 import LeftContainer from '../LeftContainer/index'
 import Header from '../Header/index'
-import SavedVideos from '../SavedVideos/index'
+// import SavedVideos from '../SavedVideos/index'
 
 import './index.css'
 
@@ -37,7 +37,7 @@ class VideosItemDetails extends Component {
     viewCount: data.view_count,
     name: data.channel.name,
     profileImageUrl: data.channel.profile_image_url,
-    subscriberCount: data.subscriber_count,
+    subscriberCount: data.channel.subscriber_count,
   })
 
   getVideoData = async () => {
@@ -58,7 +58,7 @@ class VideosItemDetails extends Component {
     const response = await fetch(url, options)
     if (response.ok) {
       const fetchedData = await response.json()
-      console.log(fetchedData)
+      console.log('fetchedData', fetchedData)
       const updatedData = this.getFormattedData(fetchedData.video_details)
 
       this.setState({
@@ -89,12 +89,12 @@ class VideosItemDetails extends Component {
   }
 
   renderVideosListView = () => {
-    const {eachVideosList, isSaveClicked} = this.state
+    const {eachVideosList} = this.state
     const {
       publishedAt,
       description,
       thumbnailUrl,
-      id,
+
       title,
       videoUrl,
       viewCount,
@@ -103,13 +103,13 @@ class VideosItemDetails extends Component {
       subscriberCount,
     } = eachVideosList
 
-    const opts = {
-      height: '315',
-      width: '700',
-      playerVars: {
-        autoplay: 1,
-      },
-    }
+    // const opts = {
+    //   height: '315',
+    //   width: '700',
+    //   playerVars: {
+    //     autoplay: 1,
+    //   },
+    // }
 
     const dateString = publishedAt
     const dateParts = dateString.split(' ')
@@ -141,16 +141,20 @@ class VideosItemDetails extends Component {
       <div>
         <h1>video</h1>
         {/* <YouTube videoId={this.getYouTubeVideoId(videoUrl)} opts={opts} /> */}
-        <img src={videoUrl} />
+        <img src={videoUrl} alt="" />
         <img src={thumbnailUrl} alt="video thumbnail" />
         <br />
         <p>{title}</p>
         <p>{viewCount} views</p>
         <p>{formatDistanceToNow(date)} ago</p>
         <p>{publishedAt}</p>
-        <button className="like-btn">Like</button>
-        <button className="dislike-btn">Dislike</button>
-        <button>Save</button>
+        <button className="like-btn" type="button">
+          Like
+        </button>
+        <button className="dislike-btn" type="button">
+          Dislike
+        </button>
+        <button type="button">Save</button>
         {/* <p onClick={this.toggleSave}>{isSaveClicked ? 'Unsave' : 'Save'}</p> */}
         {/* {isSaveClicked && <SavedVideos eachVideosList={eachVideosList} />} */}
         <hr />
@@ -168,6 +172,8 @@ class VideosItemDetails extends Component {
     </div>
   )
 
+  retryClicked = () => this.getVideoData()
+
   renderFailureView = () => (
     <div>
       <img
@@ -175,8 +181,12 @@ class VideosItemDetails extends Component {
         alt="failure view"
       />
       <h1>Oops! Something Went Wrong</h1>
-
-      <button>Retry</button>
+      <p>
+        We are having some trouble to complete your request. Please try again.
+      </p>
+      <button type="button" onClick={this.retryClicked}>
+        Retry
+      </button>
     </div>
   )
 

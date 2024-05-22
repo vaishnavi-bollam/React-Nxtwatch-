@@ -1,4 +1,4 @@
-import React, {createContext, Component} from 'react'
+import {createContext, Component} from 'react'
 
 const MyContext = createContext()
 

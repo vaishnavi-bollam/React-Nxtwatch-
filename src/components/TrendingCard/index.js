@@ -26,7 +26,11 @@ const TrendingCard = props => {
           <p>{title}</p>
           <p>{viewCount} Views</p>
           <p>{publishedAt}</p>
-          <img src={profileImageUrl} className="trending-profile-image" />
+          <img
+            src={profileImageUrl}
+            className="trending-profile-image"
+            alt=""
+          />
         </div>
       </Link>
     </li>

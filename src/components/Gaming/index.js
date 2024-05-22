@@ -6,6 +6,7 @@ import Header from '../Header/index'
 import GamingCard from '../GamingCard/index'
 import LeftContainer from '../LeftContainer/index'
 import {MyContext} from '../MyContext'
+import {DarkMainContainer} from '../StyledComponent'
 
 const apiStatusConstants = {
   initial: 'INITIAL',
@@ -25,7 +26,6 @@ class Gaming extends Component {
   }
 
   getTrendingVideos = async () => {
-    const {trendingGamingData, apiStatus} = this.state
     this.setState({
       apiStatus: apiStatusConstants.inProgress,
     })
@@ -64,11 +64,10 @@ class Gaming extends Component {
     return (
       <MyContext.Consumer>
         {({isLightMode}) => (
-          <div
+          <DarkMainContainer
             data-testid="gaming"
-            className={`videos-main-container ${
-              isLightMode ? 'black-styling' : 'white-styling'
-            }`}
+            className="videos-main-container"
+            isLightMode={isLightMode}
           >
             <div>
               <LeftContainer />
@@ -80,7 +79,7 @@ class Gaming extends Component {
                 <GamingCard each={each} key={each.id} />
               ))}
             </ul>
-          </div>
+          </DarkMainContainer>
         )}
       </MyContext.Consumer>
     )
@@ -92,6 +91,8 @@ class Gaming extends Component {
     </div>
   )
 
+  retryClicked = () => this.getTrendingVideos()
+
   renderFailureView = () => (
     <div>
       <img
@@ -99,7 +100,10 @@ class Gaming extends Component {
         alt="failure view"
       />
       <h1>Oops! Something Went Wrong</h1>
-      <button type="button">Retry</button>
+      <p>We are having some trouble</p>
+      <button type="button" onClick={this.retryClicked}>
+        Retry
+      </button>
     </div>
   )
 
